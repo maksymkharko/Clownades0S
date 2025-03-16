@@ -25,7 +25,7 @@
 
 1. Клонируйте репозиторий:
 ```bash
-git clone https://github.com/your-username/Clownades0S.git
+git clone https://github.com/maksymkharko/Clownades0S.git
 ```
 
 2. Перейдите в директорию проекта:
@@ -76,7 +76,7 @@ npm start
 1. Создайте репозиторий на GitHub
 2. Настройте GitHub Pages в настройках репозитория
 3. Выберите ветку main и папку / (root) для публикации
-4. Ваше приложение будет доступно по адресу https://your-username.github.io/Clownades0S/
+4. Ваше приложение будет доступно по адресу https://maksymkharko.github.io/Clownades0S/
 
 ## Лицензия
 
