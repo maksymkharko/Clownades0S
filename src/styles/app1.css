@@ -1,20 +1,16 @@
 :root {
-    --primary-color: #0A84FF;
-    --primary-dark: #0055CC;
-    --primary-light: #47A2FF;
-    --text-color: #E4E4E4;
-    --background-color: #1C1C1E;
-    --surface-color: #2C2C2E;
-    --modal-background: rgba(0, 0, 0, 0.7);
-    --danger-color: #FF453A;
-    --success-color: #32D74B;
-    --border-color: rgba(255, 255, 255, 0.1);
-    --input-background: #3A3A3C;
-    --button-gradient: linear-gradient(180deg, #3A3A3C 0%, #2C2C2E 100%);
-    --button-pressed: linear-gradient(180deg, #2C2C2E 0%, #3A3A3C 100%);
-    --button-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    --button-pressed-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-    --card-background: linear-gradient(180deg, #2C2C2E 0%, #1C1C1E 100%);
+    --background-color: #0a0a0c;
+    --glass-background: rgba(15, 17, 21, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.07);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.65);
+    --accent-blue: #0A84FF;
+    --accent-red: #FF453A;
+    --accent-green: #32D74B;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --modal-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --button-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --input-background: rgba(30, 34, 42, 0.5);
 }
 
 * {
@@ -25,11 +21,10 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
     line-height: 1.6;
     background-color: var(--background-color);
-    color: var(--text-color);
-    background-image: linear-gradient(180deg, #1C1C1E 0%, #2C2C2E 100%);
+    color: var(--text-primary);
     min-height: 100vh;
 }
 
@@ -44,91 +39,72 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 15px;
     margin-bottom: 20px;
-    background: var(--button-gradient);
-    border-radius: 10px;
+    background: var(--glass-background);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
     box-shadow: var(--button-shadow);
-    border: 1px solid var(--border-color);
 }
 
 .back-button {
-    color: var(--primary-color);
+    color: var(--text-primary);
     text-decoration: none;
-    font-size: 24px;
+    font-size: 20px;
     width: 40px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    background: var(--button-gradient);
-    box-shadow: var(--button-shadow);
-    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--glass-background);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
 }
 
 .back-button:active {
-    background: var(--button-pressed);
-    box-shadow: var(--button-pressed-shadow);
+    transform: translateY(1px);
 }
 
-.control-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.control-buttons button {
+.add-car-button {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    border: 1px solid var(--border-color);
-    background: var(--button-gradient);
-    box-shadow: var(--button-shadow);
-    color: var(--primary-color);
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-background);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--text-primary);
     font-size: 18px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
-    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.control-buttons button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%);
-    border-radius: 50% 50% 0 0;
-    pointer-events: none;
+.add-car-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
 }
 
-.control-buttons button:active {
-    background: var(--button-pressed);
-    box-shadow: var(--button-pressed-shadow);
+.add-car-button:active {
     transform: translateY(1px);
 }
 
 /* Main Title */
 .main-title {
-    color: var(--text-color);
+    color: var(--text-primary);
     text-align: center;
     margin-bottom: 30px;
     font-size: 32px;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
-    position: relative;
-}
-
-.main-title::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    font-weight: 700;
 }
 
 /* Car List */
@@ -139,41 +115,30 @@ body {
 }
 
 .car-item {
-    background: var(--card-background);
-    border-radius: 15px;
+    background: var(--glass-background);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
     padding: 20px;
-    box-shadow: var(--button-shadow);
+    border: 1px solid var(--glass-border);
     cursor: pointer;
-    transition: transform 0.2s ease;
-    border: 1px solid var(--border-color);
-    position: relative;
-    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.car-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
-    border-radius: 15px 15px 0 0;
-    pointer-events: none;
+.car-item:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .car-item:active {
-    background: var(--button-pressed);
-    box-shadow: var(--button-pressed-shadow);
     transform: translateY(1px);
 }
 
 .car-name {
     font-size: 20px;
     font-weight: 600;
-    color: var(--text-color);
+    color: var(--text-primary);
     margin-bottom: 15px;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 /* Timer Display */
@@ -182,10 +147,12 @@ body {
     gap: 15px;
     margin-top: 10px;
     padding: 15px;
-    background: var(--card-background);
-    border-radius: 15px;
+    background: var(--glass-background);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
     box-shadow: var(--button-shadow);
-    border: 1px solid var(--border-color);
 }
 
 .timer {
@@ -242,7 +209,7 @@ body {
 }
 
 .timer.warning .timer-value {
-    color: var(--danger-color);
+    color: var(--accent-red);
     animation: blink 1s infinite;
 }
 
@@ -252,65 +219,100 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--modal-background);
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
     overflow-y: auto;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+}
+
+.modal.active {
+    display: flex;
+    animation: modalFadeIn 0.3s ease;
 }
 
 .modal-content {
-    background: var(--card-background);
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-    border: 1px solid var(--border-color);
+    background: var(--glass-background);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 30px;
+    width: calc(100% - 60px);
     max-width: 500px;
-    width: 90%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: var(--modal-shadow);
     position: relative;
-    animation: modalSlideIn 0.3s ease-out;
+    margin: auto;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+}
+
+/* Стилизация скроллбара для WebKit браузеров */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: var(--glass-background);
+    border-radius: 4px;
+    border: 1px solid var(--glass-border);
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .modal h2 {
-    color: var(--text-color);
-    margin-bottom: 20px;
-    text-align: center;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    font-size: 24px;
+    font-weight: 600;
 }
 
 /* Form Styles */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    color: var(--text-color);
+    color: var(--text-secondary);
+    font-size: 14px;
     font-weight: 500;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .form-group input,
+.form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
+    padding: 12px 16px;
     background: var(--input-background);
-    color: var(--text-color);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: var(--text-primary);
     font-size: 16px;
-    transition: all 0.2s ease;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .form-group input:focus,
+.form-group select:focus,
 .form-group textarea:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px rgba(10, 132, 255, 0.1);
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(10, 132, 255, 0.3);
 }
 
 /* Info Grid Styles */
@@ -322,11 +324,12 @@ body {
 }
 
 .info-item {
-    background: var(--card-background);
+    background: var(--glass-background);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-radius: 12px;
     padding: 15px;
-    box-shadow: var(--button-shadow);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--glass-border);
     position: relative;
     overflow: hidden;
 }
@@ -345,19 +348,17 @@ body {
 
 .info-item label {
     display: block;
-    color: var(--text-color);
+    color: var(--text-primary);
     font-size: 14px;
     margin-bottom: 5px;
     opacity: 0.8;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .info-item span {
     display: block;
-    color: var(--text-color);
+    color: var(--text-primary);
     font-size: 16px;
     font-weight: 500;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .vin-container {
@@ -367,13 +368,15 @@ body {
 }
 
 .copy-button {
-    background: var(--button-gradient);
-    border: 1px solid var(--border-color);
-    color: var(--primary-color);
+    background: var(--glass-background);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
     padding: 5px 10px;
     border-radius: 6px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: var(--button-shadow);
     position: relative;
     overflow: hidden;
@@ -392,30 +395,35 @@ body {
 }
 
 .copy-button:active {
-    background: var(--button-pressed);
-    box-shadow: var(--button-pressed-shadow);
     transform: translateY(1px);
 }
 
-/* Button Styles */
+/* Modal Buttons */
 .modal-buttons {
     display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-    margin-top: 25px;
+    gap: 12px;
+    margin-top: 30px;
 }
 
 .modal-buttons button {
-    padding: 12px 24px;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
+    flex: 1;
+    padding: 14px 24px;
+    border-radius: 12px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-background);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     position: relative;
     overflow: hidden;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .modal-buttons button::before {
@@ -423,102 +431,171 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    height: 50%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%);
-    border-radius: 10px 10px 0 0;
-    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-buttons button:hover {
+    transform: translateY(-2px);
+}
+
+.modal-buttons button:hover::before {
+    opacity: 0.8;
+}
+
+.modal-buttons button:active {
+    transform: translateY(1px);
 }
 
 .save-button {
-    background: linear-gradient(180deg, #47A2FF 0%, #007AFF 100%);
-    color: white;
-    border-color: #0055CC !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2) !important;
+    background: rgba(10, 132, 255, 0.3) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid rgba(10, 132, 255, 0.3) !important;
+    box-shadow: 0 4px 12px rgba(10, 132, 255, 0.2);
+}
+
+.save-button:hover {
+    background: rgba(10, 132, 255, 0.4) !important;
+    border-color: rgba(10, 132, 255, 0.5) !important;
+    box-shadow: 0 6px 16px rgba(10, 132, 255, 0.3);
 }
 
 .save-button:active {
-    background: linear-gradient(180deg, #007AFF 0%, #47A2FF 100%);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    background: rgba(10, 132, 255, 0.5) !important;
+    box-shadow: 0 2px 8px rgba(10, 132, 255, 0.2);
 }
 
 .cancel-button {
-    background: var(--button-gradient);
-    color: var(--text-color);
-    box-shadow: var(--button-shadow);
+    background: rgba(30, 34, 42, 0.5);
+    color: var(--text-primary) !important;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cancel-button:hover {
+    background: rgba(30, 34, 42, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
 .cancel-button:active {
-    background: var(--button-pressed);
-    box-shadow: var(--button-pressed-shadow);
+    background: rgba(30, 34, 42, 0.8);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .delete-button {
-    background: linear-gradient(180deg, #FF6961 0%, #FF3B30 100%);
-    color: white;
-    border-color: #CC2E24 !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2) !important;
+    background: rgba(255, 69, 58, 0.3) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid rgba(255, 69, 58, 0.3) !important;
+    box-shadow: 0 4px 12px rgba(255, 69, 58, 0.2);
+}
+
+.delete-button:hover {
+    background: rgba(255, 69, 58, 0.4) !important;
+    border-color: rgba(255, 69, 58, 0.5) !important;
+    box-shadow: 0 6px 16px rgba(255, 69, 58, 0.3);
 }
 
 .delete-button:active {
-    background: linear-gradient(180deg, #FF3B30 0%, #FF6961 100%);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 69, 58, 0.5) !important;
+    box-shadow: 0 2px 8px rgba(255, 69, 58, 0.2);
 }
 
 /* Toast Notification */
 .toast {
-    display: none;
     position: fixed;
-    bottom: 20px;
+    bottom: 30px;
     left: 50%;
-    transform: translateX(-50%);
-    background: var(--button-gradient);
-    color: var(--text-color);
-    padding: 12px 24px;
-    border-radius: 25px;
-    font-size: 14px;
-    z-index: 3000;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--button-shadow);
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+    transform: translateX(-50%) translateY(100px);
+    background: var(--glass-background);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 16px 24px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    font-size: 16px;
+    box-shadow: var(--modal-shadow);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2000;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
 }
 
 /* Confirmation Dialog */
 .confirmation-dialog {
     display: none;
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--button-gradient);
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: var(--button-shadow);
-    z-index: 2000;
-    text-align: center;
-    border: 1px solid var(--border-color);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 1500;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
 }
 
-.confirmation-dialog p {
-    margin-bottom: 20px;
-    color: var(--text-color);
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+.confirmation-dialog.active {
+    display: flex;
+    animation: modalFadeIn 0.3s ease;
+}
+
+.dialog-content {
+    background: var(--glass-background);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: var(--modal-shadow);
+}
+
+.dialog-content p {
+    color: var(--text-primary);
+    font-size: 18px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Responsive Design */
 @media (max-width: 600px) {
     .app-container {
-        padding: 10px;
-    }
-
-    .modal-content {
-        width: 95%;
-        margin: 10px;
         padding: 15px;
     }
-
+    
+    .modal {
+        padding: 15px;
+    }
+    
+    .modal-content {
+        width: calc(100% - 30px);
+        padding: 20px;
+        max-height: calc(100vh - 30px);
+    }
+    
     .timer-container {
         flex-direction: column;
     }
@@ -529,17 +606,6 @@ body {
 }
 
 /* Animations */
-@keyframes modalSlideIn {
-    from {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
 @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
@@ -553,7 +619,7 @@ body {
 
 /* URL styles */
 .info-item a {
-    color: var(--primary-color);
+    color: var(--accent-blue);
     text-decoration: none;
     word-break: break-all;
     transition: color 0.2s ease;
@@ -561,7 +627,7 @@ body {
 }
 
 .info-item a:hover {
-    color: var(--primary-dark);
+    color: var(--accent-blue);
     text-decoration: underline;
 }
 
@@ -578,12 +644,14 @@ body {
 .save-description-button {
     margin-top: 10px;
     padding: 8px 16px;
-    background: var(--button-gradient);
-    border: 1px solid var(--border-color);
+    background: var(--glass-background);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
     border-radius: 6px;
-    color: var(--primary-color);
+    color: var(--text-primary);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 14px;
     display: inline-flex;
     align-items: center;
@@ -609,18 +677,16 @@ body {
 
 .edit-description-button:active,
 .save-description-button:active {
-    background: var(--button-pressed);
-    box-shadow: var(--button-pressed-shadow);
     transform: translateY(1px);
 }
 
 .description-edit {
     width: 100%;
     padding: 12px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--glass-border);
     border-radius: 10px;
     background: var(--input-background);
-    color: var(--text-color);
+    color: var(--text-primary);
     font-size: 16px;
     font-family: inherit;
     resize: vertical;
@@ -632,19 +698,21 @@ body {
 
 .description-edit:focus {
     outline: none;
-    border-color: var(--primary-color);
+    border-color: var(--accent-blue);
     box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .url-preview {
     display: none;
     font-size: 12px;
-    color: var(--primary-color);
+    color: var(--accent-blue);
     margin-top: 4px;
     padding: 4px 8px;
-    background: var(--button-gradient);
+    background: var(--glass-background);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-radius: 4px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--glass-border);
     box-shadow: var(--button-shadow);
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
 }

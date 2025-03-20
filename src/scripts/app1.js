@@ -1,5 +1,5 @@
 // Constants
-const STORAGE_KEY = 'app1';
+const STORAGE_KEY = 'clownadescarskey';
 const OIL_CHANGE_INTERVAL = 10000; // 10,000 km
 const WARNING_DAYS = 7;
 
