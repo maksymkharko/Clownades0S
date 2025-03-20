@@ -301,17 +301,18 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-template-rows: repeat(5, 1fr);
-            gap: 8px;
-            padding: 5px;
+            gap: 20px;
+            padding: 20px 25px;
             margin: 0 auto;
-            width: 90%;
-            max-width: 300px;
+            width: 100%;
+            max-width: 400px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            justify-content: center;
         }
 
         .edit-mode .apps-grid {
-            gap: 14px;
-            padding: 14px;
+            gap: 20px;
+            padding: 20px 25px;
         }
 
         .app-item {
@@ -320,16 +321,14 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            width: 81px;
+            width: 80;
             height: 82px;
             padding: 8px 4px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
-            background: rgba(40, 40, 40, 0.5);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
             will-change: transform;
             margin: 0 auto;
         }
@@ -956,7 +955,7 @@
             { name: 'Закладки', icon: 'fa-bookmark', link: 'app2.html' },
             { name: 'Trenk', icon: 'fa-unlock', link: 'app3.html' },
             { name: 'Гоогле', icon: 'fa-earth-americas', link: 'app4.html' },
-            { name: 'app5', icon: 'fa-bell', link: 'app5.html' },
+            { name: 'Календарь привычек', icon: 'fa-bell', link: 'app5.html' },
             { name: 'app6', icon: 'fa-calendar', link: 'app6.html' },
             { name: 'app7', icon: 'fa-chart-line', link: 'app7.html' },
             { name: 'app8', icon: 'fa-clock', link: 'app8.html' },

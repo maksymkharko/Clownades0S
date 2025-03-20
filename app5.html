@@ -70,5 +70,20 @@
   </div>
 
   <script src="src/scripts/app5.js"></script>
+
+  <!-- Загрузка сохраненных данных календаря -->
+  <script>
+    const savedCalendarData = localStorage.getItem('CosApp5');
+    if (savedCalendarData) {
+        // Восстановление данных календаря
+        const calendarData = JSON.parse(savedCalendarData);
+        // Используйте calendarData для восстановления состояния календаря
+    }
+
+    // Сохранение данных календаря
+    function saveCalendarData(data) {
+        localStorage.setItem('CosApp5', JSON.stringify(data));
+    }
+  </script>
 </body>
 </html> 
