@@ -158,7 +158,7 @@
         /* Основной контейнер */
         .main-container {
             flex: 1;
-            margin-top: calc(var(--status-bar-height) + 50px);
+            margin-top: calc(var(--status-bar-height) + 60px);
             margin-bottom: calc(var(--nav-bar-height) + var(--safe-area-inset-bottom));
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
@@ -255,50 +255,106 @@
 
         /* Кнопки управления */
         .control-buttons {
-            width: 100%;
-            display: flex;
-            justify-content: flex-end;
-            gap: 8px;
-            padding: 0 12px;
             position: fixed;
-            top: calc(var(--status-bar-height) + 8px);
-            right: 0;
-            z-index: 999;
+            top: calc(var(--status-bar-height) + 10px);
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            padding: 5px;
         }
 
-        .control-button {
-            width: 32px;
-            height: 32px;
-            background: rgba(60, 60, 67, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+        .control-buttons .edit-button,
+        .control-buttons .add-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: var(--background-secondary);
             border: none;
-            border-radius: 16px;
-            color: var(--text-primary);
-            font-size: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: var(--text-primary);
+            font-size: 18px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            opacity: 1;
+            position: relative;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            min-width: 40px;
+            min-height: 40px;
+            padding: 0;
+            margin: 0;
         }
 
-        .control-button span {
-            display: none;
-        }
-
-        .control-button:active {
-            transform: scale(0.96);
-            opacity: 0.8;
-        }
-
-        .control-button.edit {
+        .control-buttons .edit-button i,
+        .control-buttons .add-button i {
             display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            line-height: 1;
         }
 
-        .control-button.add {
-            background: rgba(60, 60, 67, 0.7);
+        .control-buttons .edit-button:hover,
+        .control-buttons .add-button:hover {
+            transform: scale(1.1);
+        }
+
+        .control-buttons .edit-button:active,
+        .control-buttons .add-button:active {
+            transform: scale(0.95);
+        }
+
+        .control-buttons .edit-button.active {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* Добавляем стили для кнопок на маленьких экранах */
+        @media screen and (max-width: 768px) {
+            .control-buttons {
+                top: calc(var(--status-bar-height) + 5px);
+                right: 10px;
+            }
+        }
+
+        /* Стили для кнопок редактирования на иконках */
+        .app-item .edit-button,
+        .app-item .delete-button {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            border-radius: 14px;
+            background: var(--accent-color);
+            color: white;
+            border: 1.5px solid var(--background-primary);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        .app-item .edit-button {
+            top: -6px;
+            left: -6px;
+        }
+
+        .app-item .delete-button {
+            top: -6px;
+            right: -6px;
+            background: var(--surface-danger);
+        }
+
+        .edit-mode .app-item .edit-button,
+        .edit-mode .app-item .delete-button {
+            display: flex;
         }
 
         /* Сетка приложений */
@@ -839,10 +895,10 @@
     <main class="main-container">
         <!-- Кнопки управления -->
         <div class="control-buttons">
-            <button class="control-button edit" onclick="toggleEditMode()">
+            <button class="edit-button" onclick="toggleEditMode()">
                 <i class="fas fa-pencil"></i>
             </button>
-            <button class="control-button add" onclick="showHiddenApps()">
+            <button class="add-button" onclick="showHiddenApps()">
                 <i class="fas fa-plus"></i>
             </button>
         </div>
@@ -1255,12 +1311,12 @@
 
         // Переключение режима редактирования
         function toggleEditMode() {
-            const editButton = document.querySelector('.control-button.edit');
+            const editButton = document.querySelector('.edit-button');
             isEditMode = !isEditMode;
             document.body.classList.toggle('edit-mode', isEditMode);
             
             if (isEditMode) {
-                editButton.innerHTML = '<i class="fas fa-check"></i>';
+                editButton.classList.add('active');
                 initDragAndDrop();
                 
                 // Показываем кнопки редактирования
@@ -1268,7 +1324,7 @@
                     item.draggable = true;
                 });
             } else {
-                editButton.innerHTML = '<i class="fas fa-pencil"></i>';
+                editButton.classList.remove('active');
                 disableDragAndDrop();
                 
                 // Скрываем кнопки редактирования
