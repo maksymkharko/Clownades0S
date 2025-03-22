@@ -255,72 +255,55 @@
 
         /* Кнопки управления */
         .control-buttons {
-            position: fixed;
-            top: calc(var(--status-bar-height) + 10px);
-            right: 20px;
             display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 1000;
-            padding: 5px;
+            justify-content: center;
+            padding: 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
-        .control-buttons .edit-button,
-        .control-buttons .add-button {
-            width: 40px;
-            height: 40px;
-            border-radius: 20px;
+        .control-buttons .edit-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 16px;
             background: var(--background-secondary);
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--text-primary);
-            font-size: 18px;
+            font-size: 14px;
             cursor: pointer;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            opacity: 1;
-            position: relative;
-            transition: transform 0.2s ease, opacity 0.2s ease;
-            min-width: 40px;
-            min-height: 40px;
-            padding: 0;
-            margin: 0;
+            transition: all 0.2s ease;
+            min-width: 120px;
         }
 
-        .control-buttons .edit-button i,
-        .control-buttons .add-button i {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            line-height: 1;
+        .control-buttons .edit-button i {
+            font-size: 20px;
+            color: var(--accent-color);
         }
 
-        .control-buttons .edit-button:hover,
-        .control-buttons .add-button:hover {
-            transform: scale(1.1);
+        .control-buttons .edit-button span {
+            font-weight: 500;
         }
 
-        .control-buttons .edit-button:active,
-        .control-buttons .add-button:active {
-            transform: scale(0.95);
+        .control-buttons .edit-button:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .control-buttons .edit-button:active {
+            transform: translateY(0);
         }
 
         .control-buttons .edit-button.active {
             background: var(--accent-color);
-            color: white;
+            border-color: var(--accent-color);
         }
 
-        /* Добавляем стили для кнопок на маленьких экранах */
-        @media screen and (max-width: 768px) {
-            .control-buttons {
-                top: calc(var(--status-bar-height) + 5px);
-                right: 10px;
-            }
+        .control-buttons .edit-button.active i,
+        .control-buttons .edit-button.active span {
+            color: white;
         }
 
         /* Стили для кнопок редактирования на иконках */
@@ -876,6 +859,66 @@
             box-shadow: var(--shadow-inner);
             transform: translateX(-50%) translateY(1px);
         }
+
+        /* Добавляем стили для кнопки добавления */
+        .app-item.add-app {
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .app-item.add-app:hover {
+            opacity: 1;
+        }
+
+        .app-item.add-app .app-icon {
+            background: var(--background-secondary);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+        }
+
+        .app-item.add-app .app-icon i {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .app-item.add-app .app-name {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Стили для кнопки редактирования в сетке */
+        .app-item.edit-mode-button {
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .app-item.edit-mode-button:hover {
+            opacity: 1;
+        }
+
+        .app-item.edit-mode-button .app-icon {
+            background: var(--background-secondary);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+        }
+
+        .app-item.edit-mode-button .app-icon i {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .app-item.edit-mode-button .app-name {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .app-item.edit-mode-button.active {
+            opacity: 1;
+        }
+
+        .app-item.edit-mode-button.active .app-icon {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .app-item.edit-mode-button.active .app-icon i,
+        .app-item.edit-mode-button.active .app-name {
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -893,16 +936,6 @@
 
     <!-- Основной контейнер -->
     <main class="main-container">
-        <!-- Кнопки управления -->
-        <div class="control-buttons">
-            <button class="edit-button" onclick="toggleEditMode()">
-                <i class="fas fa-pencil"></i>
-            </button>
-            <button class="add-button" onclick="showHiddenApps()">
-                <i class="fas fa-plus"></i>
-            </button>
-        </div>
-
         <!-- Сетка приложений -->
         <div class="apps-grid">
             <!-- Приложения будут добавлены динамически -->
@@ -1241,7 +1274,7 @@
                     ...(savedApp || defaultApp),
                     position: savedApp ? savedApp.position : defaultApps.indexOf(defaultApp)
                 };
-            }).filter(app => !hiddenApps.includes(app.link)); // Фильтруем скрытые приложения
+            }).filter(app => !hiddenApps.includes(app.link));
             
             // Сортируем приложения по сохраненным позициям
             apps.sort((a, b) => {
@@ -1258,6 +1291,42 @@
                 const appElement = createAppElement(app);
                 appsGrid.appendChild(appElement);
             });
+
+            // Добавляем кнопку редактирования
+            const editButton = document.createElement('div');
+            editButton.className = 'app-item edit-mode-button';
+            editButton.innerHTML = `
+                <div class="app-icon">
+                    <i class="fas fa-pencil"></i>
+                </div>
+                <span class="app-name">Редактировать</span>
+            `;
+            
+            // Добавляем обработчик клика
+            editButton.addEventListener('click', () => {
+                toggleEditMode();
+            });
+            
+            appsGrid.appendChild(editButton);
+
+            // Добавляем кнопку "+" в конец
+            const addButton = document.createElement('div');
+            addButton.className = 'app-item add-app';
+            addButton.innerHTML = `
+                <div class="app-icon">
+                    <i class="fas fa-plus"></i>
+                </div>
+                <span class="app-name">Добавить</span>
+            `;
+            
+            // Добавляем обработчик клика
+            addButton.addEventListener('click', () => {
+                if (!isEditMode) {
+                    showHiddenApps();
+                }
+            });
+            
+            appsGrid.appendChild(addButton);
         }
 
         // Создание элемента приложения
@@ -1311,7 +1380,7 @@
 
         // Переключение режима редактирования
         function toggleEditMode() {
-            const editButton = document.querySelector('.edit-button');
+            const editButton = document.querySelector('.edit-mode-button');
             isEditMode = !isEditMode;
             document.body.classList.toggle('edit-mode', isEditMode);
             
@@ -1321,7 +1390,9 @@
                 
                 // Показываем кнопки редактирования
                 document.querySelectorAll('.app-item').forEach(item => {
-                    item.draggable = true;
+                    if (!item.classList.contains('edit-mode-button') && !item.classList.contains('add-app')) {
+                        item.draggable = true;
+                    }
                 });
             } else {
                 editButton.classList.remove('active');
@@ -1329,7 +1400,9 @@
                 
                 // Скрываем кнопки редактирования
                 document.querySelectorAll('.app-item').forEach(item => {
-                    item.draggable = false;
+                    if (!item.classList.contains('edit-mode-button') && !item.classList.contains('add-app')) {
+                        item.draggable = false;
+                    }
                 });
                 
                 // Сохраняем состояние после выхода из режима редактирования

@@ -618,32 +618,6 @@
                 transform: scale(1);
             }
         }
-
-        .storage-info {
-            background: var(--surface-secondary);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .storage-info ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .storage-info li {
-            margin: 8px 0;
-            padding: 8px;
-            background: var(--surface-primary);
-            border-radius: 6px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .storage-info strong {
-            color: var(--text-accent);
-            margin-right: 8px;
-        }
     </style>
 </head>
 <body>
@@ -714,20 +688,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="settings-section">
-            <h2>Что хранится в Local Storage</h2>
-            <div class="storage-info">
-                <ul>
-                    <li><strong>CosApp2Links</strong> - Ссылки из App2</li>
-                    <li><strong>CosApp2PageTitle</strong> - Заголовок страницы App2</li>
-                    <li><strong>CosBirthdate</strong> - Дата рождения из App3</li>
-                    <li><strong>CosCode</strong> - Код из App3</li>
-                    <li><strong>CosApp5</strong> - Данные календаря из App5</li>
-                    <li><strong>CosSettingsPageTitle</strong> - Заголовок страницы настроек</li>
-                </ul>
-            </div>
-        </div>
     </main>
 
     <!-- Модальное окно для экспорта -->
@@ -793,7 +753,6 @@
             initPageTitle();
             initNavigation();
             initExportImport();
-            updateStorageKeys();
         });
 
         // Обновление времени и даты
@@ -981,109 +940,41 @@
             }, 2000);
         }
 
-        // Обновляем все ключи localStorage с префиксом Cos
-        function updateStorageKeys() {
-            const oldKeys = {
-                'app2Links': 'CosApp2Links',
-                'app2PageTitle': 'CosApp2PageTitle',
-                'birthdate': 'CosBirthdate',
-                'code': 'CosCode',
-                'app5': 'CosApp5',
-                'settingsPageTitle': 'CosSettingsPageTitle'
-            };
-
-            for (const [oldKey, newKey] of Object.entries(oldKeys)) {
-                const value = localStorage.getItem(oldKey);
-                if (value !== null) {
-                    localStorage.setItem(newKey, value);
-                    localStorage.removeItem(oldKey);
-                }
-            }
-        }
-
         // Функция экспорта данных
         function exportData() {
-            // Собираем все данные из localStorage
-            const exportData = {
-                // Данные главной страницы
-                mainPage: {
-                    title: localStorage.getItem('indexPageTitle'),
-                    apps: JSON.parse(localStorage.getItem('apps') || '[]'),
-                    hiddenApps: JSON.parse(localStorage.getItem('hiddenApps') || '[]')
-                },
-                // Данные страницы настроек
-                settings: {
-                    theme: localStorage.getItem('theme'),
-                    fontSize: localStorage.getItem('fontSize'),
-                    language: localStorage.getItem('language'),
-                    customSettings: JSON.parse(localStorage.getItem('customSettings') || '{}')
-                },
-                // Данные приложений
-                apps: {
-                    app1: {
-                        data: JSON.parse(localStorage.getItem('CosApp1Data') || '[]'),
-                        settings: JSON.parse(localStorage.getItem('CosApp1Settings') || '{}')
-                    },
-                    app2: {
-                        data: JSON.parse(localStorage.getItem('CosApp2Data') || '[]'),
-                        settings: JSON.parse(localStorage.getItem('CosApp2Settings') || '{}'),
-                        bookmarks: JSON.parse(localStorage.getItem('CosApp2Bookmarks') || '[]')
-                    },
-                    app3: {
-                        data: JSON.parse(localStorage.getItem('CosApp3Data') || '[]'),
-                        settings: JSON.parse(localStorage.getItem('CosApp3Settings') || '{}'),
-                        passwords: JSON.parse(localStorage.getItem('CosApp3Passwords') || '[]')
-                    },
-                    app4: {
-                        data: JSON.parse(localStorage.getItem('CosApp4Data') || '[]'),
-                        settings: JSON.parse(localStorage.getItem('CosApp4Settings') || '{}'),
-                        searchHistory: JSON.parse(localStorage.getItem('CosApp4History') || '[]')
-                    },
-                    app5: {
-                        data: JSON.parse(localStorage.getItem('CosApp5Data') || '[]'),
-                        settings: JSON.parse(localStorage.getItem('CosApp5Settings') || '{}'),
-                        habits: JSON.parse(localStorage.getItem('CosApp5Habits') || '[]')
-                    }
-                },
-                // Дополнительные настройки
-                system: {
-                    lastActivePage: localStorage.getItem('lastActivePage'),
-                    navigationHistory: JSON.parse(localStorage.getItem('navigationHistory') || '[]'),
-                    appStates: JSON.parse(localStorage.getItem('appStates') || '{}')
-                }
+            const data = {};
+            const keyPrefixes = {
+                'index': ['indexPageTitle', 'apps', 'hiddenApps'],
+                'app1': ['app1Cars'],
+                'app2': ['app2Links', 'app2PageTitle'],
+                'app3': ['birthdate', 'code'],
+                'app5': ['app5'],
+                'settings': ['settingsPageTitle']
             };
 
-            // Добавляем все остальные ключи из localStorage, которые могли быть не учтены
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (!key.startsWith('Cos')) {
-                    try {
-                        exportData.other = exportData.other || {};
-                        exportData.other[key] = JSON.parse(localStorage.getItem(key));
-                    } catch {
-                        exportData.other = exportData.other || {};
-                        exportData.other[key] = localStorage.getItem(key);
+            // Собираем все данные
+            for (const [page, keys] of Object.entries(keyPrefixes)) {
+                data[page] = {};
+                keys.forEach(key => {
+                    const value = localStorage.getItem(key);
+                    if (value !== null) {
+                        data[page][key] = value;
                     }
-                }
+                });
             }
 
             // Создаем файл для скачивания
-            const dataStr = JSON.stringify(exportData, null, 2);
-            const dataBlob = new Blob([dataStr], { type: 'application/json' });
-            const url = window.URL.createObjectURL(dataBlob);
-            
-            // Создаем ссылку для скачивания
-            const downloadLink = document.createElement('a');
-            downloadLink.href = url;
-            downloadLink.download = `clownades_backup_${new Date().toISOString().slice(0,10)}.json`;
-            
-            // Добавляем ссылку на страницу и эмулируем клик
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            
-            // Удаляем ссылку и освобождаем URL
-            document.body.removeChild(downloadLink);
-            window.URL.revokeObjectURL(url);
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `backup_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showNotification('Данные успешно экспортированы');
         }
 
         // Функция импорта данных
@@ -1095,40 +986,43 @@
             reader.onload = function(e) {
                 try {
                     const data = JSON.parse(e.target.result);
-                    for (const [key, value] of Object.entries(data)) {
-                        if (key.startsWith('Cos')) {
+                    
+                    // Проверяем структуру данных
+                    if (typeof data !== 'object') throw new Error('Неверный формат данных');
+
+                    // Импортируем данные по страницам
+                    for (const [page, pageData] of Object.entries(data)) {
+                        for (const [key, value] of Object.entries(pageData)) {
                             localStorage.setItem(key, value);
                         }
                     }
-                    showNotification('Данные успешно импортированы!');
-                    setTimeout(() => location.reload(), 1500);
+
+                    showNotification('Данные успешно импортированы');
+                    setTimeout(() => window.location.reload(), 1000);
                 } catch (error) {
-                    showNotification('Ошибка при импорте данных!', true);
+                    showNotification('Ошибка при импорте данных: ' + error.message);
                 }
             };
             reader.readAsText(file);
+            event.target.value = ''; // Сброс input для возможности повторного импорта
         }
 
         // Функция удаления всех данных
         function resetAllData() {
-            if (confirm('Вы уверены, что хотите удалить все данные? Это действие нельзя отменить.')) {
-                for (let i = localStorage.length - 1; i >= 0; i--) {
-                    const key = localStorage.key(i);
-                    if (key.startsWith('Cos')) {
-                        localStorage.removeItem(key);
-                    }
-                }
-                showNotification('Все данные успешно удалены!');
-                setTimeout(() => location.reload(), 1500);
-            }
-        }
+            if (confirm('Вы уверены, что хотите удалить ВСЕ данные? Это действие нельзя отменить.')) {
+                const keyPrefixes = [
+                    'indexPageTitle', 'apps', 'hiddenApps',
+                    'app1Cars',
+                    'app2Links', 'app2PageTitle',
+                    'birthdate', 'code',
+                    'app5',
+                    'settingsPageTitle',
+                    'lastActivePage'
+                ];
 
-        // Функция для удаления всех данных из localStorage
-        function clearAllLocalStorage() {
-            if (confirm('Вы уверены, что хотите удалить ВСЕ данные из Local Storage? Это действие нельзя отменить.')) {
-                localStorage.clear();
-                showNotification('Все данные из Local Storage удалены!');
-                setTimeout(() => location.reload(), 1500);
+                keyPrefixes.forEach(key => localStorage.removeItem(key));
+                showNotification('Все данные успешно удалены');
+                setTimeout(() => window.location.reload(), 1000);
             }
         }
     </script>

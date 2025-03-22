@@ -45,27 +45,5 @@
     </main>
 
     <script src="src/scripts/app3.js"></script>
-
-    <!-- Загрузка сохраненных данных -->
-    <script>
-        const savedBirthdate = localStorage.getItem('CosBirthdate');
-        if (savedBirthdate) {
-            document.getElementById('birthdate').value = savedBirthdate;
-        }
-
-        const savedCode = localStorage.getItem('CosCode');
-        if (savedCode) {
-            document.getElementById('code').value = savedCode;
-        }
-
-        // Сохранение данных
-        function saveBirthdate(value) {
-            localStorage.setItem('CosBirthdate', value);
-        }
-
-        function saveCode(value) {
-            localStorage.setItem('CosCode', value);
-        }
-    </script>
 </body>
 </html>

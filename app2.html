@@ -47,29 +47,5 @@
 
     <!-- Подключение JavaScript из папки src/scripts -->
     <script src="src/scripts/app2.js"></script>
-
-    <!-- Загрузка сохраненных ссылок -->
-    <script>
-    const savedLinks = localStorage.getItem('CosApp2Links');
-    if (savedLinks) {
-        linksContainer.innerHTML = savedLinks;
-    }
-
-    // Сохранение ссылок
-    function saveLinks() {
-        localStorage.setItem('CosApp2Links', linksContainer.innerHTML);
-    }
-
-    // Загрузка заголовка страницы
-    const savedTitle = localStorage.getItem('CosApp2PageTitle');
-    if (savedTitle) {
-        document.title = savedTitle;
-    }
-
-    // Сохранение заголовка страницы
-    function savePageTitle(title) {
-        localStorage.setItem('CosApp2PageTitle', title);
-    }
-    </script>
 </body>
 </html>
