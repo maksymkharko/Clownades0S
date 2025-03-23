@@ -1,0 +1,16 @@
+{
+  "name": "clownades0s",
+  "version": "1.0.0",
+  "description": "Многофункциональное веб-приложение с темной темой и скеоморфным дизайном",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["pwa", "dark-theme", "skeuomorphic"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^2.11.0"
+  }
+}
